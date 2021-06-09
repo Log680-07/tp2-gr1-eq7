@@ -12,11 +12,9 @@ Select the python interpreter of this virtual environment
 ### To generate requirements.txt
 ```pipenv lock -r > requirements.txt```
 
+
 ## To run project
 In terminal: ```python3 main.py```
-
-if using virtual environnment, in terminal: ```<path>/python.exe main.py```
-
 
 ## Unit Test
 
@@ -24,8 +22,8 @@ if using virtual environnment, in terminal: ```<path>/python.exe main.py```
 At the root folder: run ```python -m unittest discover -v```
 
 ## SignalR & API
-The client use SignalR to receive data and get request to activate the hvac unit Server: https://log680.vincentboivin.ca
-
+The client use SignalR to receive data and get request to activate the hvac unit
+Server: https://log680.vincentboivin.ca
 
 ### SignalR
 To receive continuous data from the server, we use SignalR. SignalR allow us to mimic real-time data sent to the client. https://github.com/mandrewcito/signalrcore
@@ -33,7 +31,7 @@ To receive continuous data from the server, we use SignalR. SignalR allow us to 
 To receive data from the server, start a connection with SignalR and connect to this hub: *{serverurl}/SensorHub?token={token}*.
 
 ### Endpoints
-To control the Hvac, we use get Http request. The nbTicks represent for how long the AC or Heater will be activated.
+To control the Hvac, we use GET HTTP requests. The nbTicks represent for how long the AC or Heater will be activated.
 
 - To turn off the unit : *GET {serverUrl}/api/Hvac/{token}/TurnOffHvac*
 - To start the AC of the unit : *GET {serverUrl}/api/Hvac/{token}/TurnOnAc/{nbTicks}*
