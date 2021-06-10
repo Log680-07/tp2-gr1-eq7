@@ -43,7 +43,7 @@ class Main:
 
     def setSensorHub(self):
         self._hub_connection = HubConnectionBuilder()\
-        .with_url(f"{self.HOST}/SensorHub?token={self.TOKEN}")\
+        .with_url(f"https://log680.vincentboivin.ca/sensor/SensorHub?token={self.TOKEN}")\
         .configure_logging(logging.INFO)\
         .with_automatic_reconnect({
             "type": "raw",
@@ -75,12 +75,19 @@ class Main:
         
 
     def sendActionToHvac(self, date, action, nbTick):
-        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
+        
+        r = requests.get(f"https://log680.vincentboivin.ca/sensor/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
 
 if __name__ == '__main__':
-    main = Main()
+
+    limitFroid = 20.0
+    limitChaud = 80.0
+    nbTick = 7
+    myToken = "f0c51c904ed6dd637b2f"
+
+    main = Main(myToken, nbTick, limitFroid, limitChaud)
     main.start()
 
 
