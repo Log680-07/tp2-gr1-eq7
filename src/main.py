@@ -95,7 +95,7 @@ if __name__ == '__main__':
     if "LIMITFROID" in os.environ:
         limitFroid = float(os.environ["LIMITFROID"])
     if "TOKEN" in os.environ:
-        token = os.environ["TOKEN"]
+        mytoken = os.environ["TOKEN"]
 
     main = Main(mytoken, nbTick, limitFroid, limitChaud)
     main.start()
