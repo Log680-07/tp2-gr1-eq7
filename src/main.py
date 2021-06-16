@@ -31,8 +31,7 @@ class Main:
 
     def start(self):
         self.setup()
-        self._hub_connection.start()
-        
+        self._hub_connection.start() 
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
@@ -43,7 +42,7 @@ class Main:
 
     def setSensorHub(self):
         self._hub_connection = HubConnectionBuilder()\
-        .with_url(f"https://log680.vincentboivin.ca/sensor/SensorHub?token={self.TOKEN}")\
+        .with_url(f"https://log680.vincentboivin.ca/SensorHub?token={self.TOKEN}")\
         .configure_logging(logging.INFO)\
         .with_automatic_reconnect({
             "type": "raw",
@@ -76,18 +75,16 @@ class Main:
 
     def sendActionToHvac(self, date, action, nbTick):
         
-        r = requests.get(f"https://log680.vincentboivin.ca/sensor/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
+        r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
 
 if __name__ == '__main__':
-
+    
     limitFroid = 20.0
     limitChaud = 80.0
     nbTick = 7
-    mytoken = "f0c51c904ed6dd637b2f"
-
-    
+    token ="f0c51c904ed6dd637b2f"
     if "NBTICK" in os.environ:
         nbTick = int(os.environ["NBTICK"])
     if "LIMITCHAUD" in os.environ:
@@ -95,9 +92,9 @@ if __name__ == '__main__':
     if "LIMITFROID" in os.environ:
         limitFroid = float(os.environ["LIMITFROID"])
     if "TOKEN" in os.environ:
-        mytoken = os.environ["TOKEN"]
+        token = os.environ["TOKEN"]
 
-    main = Main(mytoken, nbTick, limitFroid, limitChaud)
+    main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 
 
