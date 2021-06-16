@@ -80,21 +80,9 @@ class Main:
         print(details)
 
 if __name__ == '__main__':
-    
-    limitFroid = 20.0
-    limitChaud = 80.0
-    nbTick = 7
-    token ="f0c51c904ed6dd637b2f"
-    if "NBTICK" in os.environ:
-        nbTick = int(os.environ["NBTICK"])
-    if "LIMITCHAUD" in os.environ:
-        limitChaud = float(os.environ["LIMITCHAUD"])
-    if "LIMITFROID" in os.environ:
-        limitFroid = float(os.environ["LIMITFROID"])
-    if "TOKEN" in os.environ:
-        token = os.environ["TOKEN"]
+        
 
-    main = Main(token, nbTick, limitFroid, limitChaud)
+    main = Main(os.environ["TOKEN"], int(os.environ["NBTICK"]), float(os.environ["LIMITFROID"]), float(os.environ["LIMITCHAUD"]))
     main.start()
 
 
