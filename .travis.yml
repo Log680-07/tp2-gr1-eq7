@@ -8,7 +8,7 @@ branches:
 
 # version python
 python:
-  - 3.7
+  - "3.7"
 
 #service
 services:
@@ -17,3 +17,7 @@ services:
 # installation de prerequis
 before_script:
   - pip install -r requirements.txt
+
+# command to run tests
+script:
+  - pytest

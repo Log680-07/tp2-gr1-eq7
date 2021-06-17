@@ -94,6 +94,8 @@ if __name__ == '__main__':
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
 
+    print(limitChaud)
+    print(limitFroid)
     main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 
