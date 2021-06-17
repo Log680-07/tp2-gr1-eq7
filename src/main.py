@@ -8,10 +8,19 @@ import os
 import mysql.connector as mysql
 
 class Main:
-    def __init__(self):
+    def __init__(self, mytoken, nbTick, limitFroid, limitChaud):
+
+
+        if nbTick <=0:
+            raise Exception (" Temperature en dessous de Zero")
+        elif limitChaud <= limitFroid :
+            raise Exception (" Temperateur au desus de la chaleur max")
+
         self._hub_connection = None
-        self.HOST = os.environ["HVAC_HOST"]
-        self.TOKEN = os.environ["HVAC_TOKEN"]
+        self.NBTICK = nbTick
+        self.LIMITCHAUD = limitChaud
+        self.LIMITFROID = limitFroid
+        self.TOKEN = mytoken
     
     def __del__(self):
         if (self._hub_connection != None):
@@ -22,8 +31,7 @@ class Main:
 
     def start(self):
         self.setup()
-        self._hub_connection.start()
-        
+        self._hub_connection.start() 
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
@@ -31,9 +39,10 @@ class Main:
         self._hub_connection.stop()
         sys.exit(0)
 
+
     def setSensorHub(self):
         self._hub_connection = HubConnectionBuilder()\
-        .with_url(f"{self.HOST}/SensorHub?token={self.TOKEN}")\
+        .with_url(f"https://log680.vincentboivin.ca/SensorHub?token={self.TOKEN}")\
         .configure_logging(logging.INFO)\
         .with_automatic_reconnect({
             "type": "raw",
@@ -58,18 +67,22 @@ class Main:
             print(err)
     
     def analyzeDatapoint(self, date, data):
-        if (data >= 80.0):                
-            self.sendActionToHvac(date, "TurnOnAc", 6)
-        elif (data <= 20.0):                
-            self.sendActionToHvac(date, "TurnOnHeater", 6)
+        if (data <= self.LIMITFROID):                
+            self.sendActionToHvac(date, "TurnOnHeater", self.NBTICK)
+        elif (data >= self.LIMITCHAUD):                
+            self.sendActionToHvac(date, "TurnOnAc", self.NBTICK)
+        
 
     def sendActionToHvac(self, date, action, nbTick):
-        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
+        
+        r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
 
 if __name__ == '__main__':
-    main = Main()
+        
+
+    main = Main(os.environ["TOKEN"], int(os.environ["NBTICK"]), float(os.environ["LIMITFROID"]), float(os.environ["LIMITCHAUD"]))
     main.start()
 
 
