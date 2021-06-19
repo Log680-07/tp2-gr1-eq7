@@ -17,3 +17,7 @@ services:
 # installation de prerequis
 before_script:
   - pip install -r requirements.txt
+
+# command to run tests
+script:
+  - pytest
