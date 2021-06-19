@@ -12,9 +12,9 @@ class Main:
 
 
         if nbTick <=0:
-            raise Exception (" Temperature en dessous de Zero")
+            raise Exception (" Valeur invalide !")
         elif limitChaud <= limitFroid :
-            raise Exception (" Temperateur au desus de la chaleur max")
+            raise Exception (" Temperateur chaude en dessous de celle du froid")
 
         self._hub_connection = None
         self.NBTICK = nbTick
