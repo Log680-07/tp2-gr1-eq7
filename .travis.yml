@@ -1,14 +1,13 @@
 language: python
 
+# version python
+python:
+  - 3.7
 # branches de developpement
 branches:
   only:
   - main
   - develop
-
-# version python
-python:
-  - 3.7
 
 #service
 services:
