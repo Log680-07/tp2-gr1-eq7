@@ -12,9 +12,9 @@ class Main:
 
 
         if nbTick <=0:
-            raise Exception (" Temperature en dessous de Zero")
+            raise Exception (" Valeur invalide !")
         elif limitChaud <= limitFroid :
-            raise Exception (" Temperateur au desus de la chaleur max")
+            raise Exception (" Temperateur chaude en dessous de celle du froid")
 
         self._hub_connection = None
         self.NBTICK = nbTick
@@ -85,6 +85,8 @@ if __name__ == '__main__':
     limitChaud = 80.0
     nbTick = 7
     token ="f0c51c904ed6dd637b2f"
+    # si variable d'environnement existe, on le prend, sinon, valeur par defaut
+
     if "NBTICK" in os.environ:
         nbTick = int(os.environ["NBTICK"])
     if "LIMITCHAUD" in os.environ:
@@ -94,8 +96,7 @@ if __name__ == '__main__':
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
 
-    print(limitChaud)
-    print(limitFroid)
+
     main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 

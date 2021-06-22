@@ -1,14 +1,13 @@
 language: python
 
-# branches de developpement
+# version python
+python:
+  - 3.7
+# branches de developpement qui seront indexées par travis
 branches:
   only:
   - main
   - develop
-
-# version python
-python:
-  - 3.7
 
 #service
 services:
@@ -20,8 +19,18 @@ before_script:
 
 script:
   - python -m unittest discover -v
+<<<<<<< HEAD
 after_success:
   - docker build -t hvac_controller .
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - docker tag hvac_controller $DOCKER_USER/hvac_controller:latest
   - docker push $DOCKER_USER/hvac_controller:latest
+=======
+
+# creation d'image et sa savegarde dans le docker
+after success:
+  - docker build -t etslog680/image_hvac .
+  - docker login -u $USER_DOCKER  -p $PWR_DOCKER
+  - docker push etslog680/image_hvac:latest
+
+>>>>>>> 0e9b4a7e01ece7691e582a877d175baf0a631029
