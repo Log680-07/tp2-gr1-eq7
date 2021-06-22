@@ -89,14 +89,21 @@ if __name__ == '__main__':
 
     if "NBTICK" in os.environ:
         nbTick = int(os.environ["NBTICK"])
-    if "LIMITCHAUD" in os.environ:
-        limitChaud = float(os.environ["LIMITCHAUD"])
-    if "LIMITFROID" in os.environ:
-        limitFroid = float(os.environ["LIMITFROID"])
+    
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
 
-
+    testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
+    
+    if(testtype==0):
+        if "LIMITCHAUD" in os.environ:
+            limitChaud = float(os.environ["LIMITCHAUD"])
+        if "LIMITFROID" in os.environ:
+            limitFroid = float(os.environ["LIMITFROID"])
+    elif(testtype==1):
+        limitChaud= int(input("Entrer limite chaleur max de control : "))
+        limitFroid= int(input("Entrer limite froid min de control : "))
+    
     main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 
