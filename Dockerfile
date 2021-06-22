@@ -1,7 +1,7 @@
 
 # --- Fichier Docker ----#
 
-FROM python:3.7-alpine AS imagelab
+FROM python:3.7-alpine AS image_hvac
 
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
@@ -15,8 +15,8 @@ COPY src/ ./src
 
 FROM python:3.7-alpine
 
-COPY --from=imagelab /opt/venv /opt/venv
-COPY --from=imagelab /app /app
+COPY --from=image_hvac /opt/venv /opt/venv
+COPY --from=image_hvac /app /app
 
 WORKDIR /app
 
