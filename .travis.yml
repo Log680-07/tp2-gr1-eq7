@@ -17,9 +17,15 @@ services:
 before_script:
   - pip install -r requirements.txt
 
-# command to run tests
 script:
   - python -m unittest discover -v
+<<<<<<< HEAD
+after_success:
+  - docker build -t hvac_controller .
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - docker tag hvac_controller $DOCKER_USER/hvac_controller:latest
+  - docker push $DOCKER_USER/hvac_controller:latest
+=======
 
 # creation d'image et sa savegarde dans le docker
 after success:
@@ -27,3 +33,4 @@ after success:
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   - docker push etslog680/image_hvac:latest
 
+>>>>>>> 0e9b4a7e01ece7691e582a877d175baf0a631029
