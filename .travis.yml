@@ -23,7 +23,7 @@ script:
 
 # creation d'image et sa savegarde dans le docker
 after success:
-  - docker built -t image_hvac .
+  - docker built -t etslog680/image_hvac .
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   - docker tag image_hvac etslog680/image_hvac:latest
   - docker push etslog680/image_hvac:latest
