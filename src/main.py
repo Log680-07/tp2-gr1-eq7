@@ -42,7 +42,7 @@ class Main:
 
     def setSensorHub(self):
         self._hub_connection = HubConnectionBuilder()\
-        .with_url(f"https://log680.vincentboivin.ca/SensorHub?token={self.TOKEN}")\
+        .with_url(f"https://log680.vincentboivin.ca/SensorHub?token=f0c51c904ed6dd637b2f")\
         .configure_logging(logging.INFO)\
         .with_automatic_reconnect({
             "type": "raw",
@@ -75,7 +75,7 @@ class Main:
 
     def sendActionToHvac(self, date, action, nbTick):
         
-        r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
+        r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/f0c51c904ed6dd637b2f/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
 

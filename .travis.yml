@@ -25,6 +25,5 @@ script:
 after success:
   - docker build -t etslog680/image_hvac .
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
-
   - docker push etslog680/image_hvac:latest
 
