@@ -26,4 +26,4 @@ after success:
   - docker built -t image_hvac .
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   - docker tag image_hvac etslog680/image_hvac:latest
-  - docker push $USER_DOCKER/image_hvac:latest
+  - docker push etslog680/image_hvac:latest
