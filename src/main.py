@@ -92,8 +92,9 @@ if __name__ == '__main__':
     
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
-
-    testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
+    testtype = 2
+    while testtype not in [0, 1]:
+         testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
     
     if(testtype==0):
         if "LIMITCHAUD" in os.environ:
