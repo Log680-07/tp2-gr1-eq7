@@ -32,6 +32,7 @@ class Main:
     def start(self):
         self.setup()
         self._hub_connection.start() 
+
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
@@ -67,11 +68,10 @@ class Main:
             print(err)
     
     def analyzeDatapoint(self, date, data):
-        if (data <= self.LIMITFROID):                
-            self.sendActionToHvac(date, "TurnOnHeater", self.NBTICK)
-        elif (data >= self.LIMITCHAUD):                
+        if (data >= self.LIMITCHAUD):                
             self.sendActionToHvac(date, "TurnOnAc", self.NBTICK)
-        
+        elif (data <= self.LIMITFROID):                
+            self.sendActionToHvac(date, "TurnOnHeater", self.NBTICK)
 
     def sendActionToHvac(self, date, action, nbTick):
         
