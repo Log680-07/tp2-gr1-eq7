@@ -87,7 +87,7 @@ if __name__ == '__main__':
     # token ="f0c51c904ed6dd637b2f"
     limitFroid = 0
     limitChaud = 0
-    nbTick = 0
+    nbTick = 7
     token =""
     # si variable d'environnement existe, on le prend, sinon, valeur par defaut
 
