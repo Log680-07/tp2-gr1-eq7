@@ -81,17 +81,17 @@ class Main:
 
 if __name__ == '__main__':
     
-    limitFroid = 20.0
-    limitChaud = 80.0
-    nbTick = 7
-    token ="f0c51c904ed6dd637b2f"
+    # limitFroid = 20.0
+    # limitChaud = 80.0
+    # nbTick = 7
+    # token ="f0c51c904ed6dd637b2f"
     # si variable d'environnement existe, on le prend, sinon, valeur par defaut
 
-    if "NBTICK" in os.environ:
-        nbTick = int(os.environ["NBTICK"])
+    # if "NBTICK" in os.environ:
+    nbTick = int(os.environ["NBTICK"])
     
-    if "TOKEN" in os.environ:
-        token = os.environ["TOKEN"]
+    # if "TOKEN" in os.environ:
+    token = os.environ["TOKEN"]
 
     testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
     
