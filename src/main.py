@@ -10,12 +10,12 @@ import mysql.connector as mysql
 class Main:
     def __init__(self, mytoken, nbTick, limitFroid, limitChaud):
 
-
+    # test des valeurs recu en paramettre
         if nbTick <=0:
-            raise Exception (" Valeur invalide !")
+            raise Exception (" Valeur invalide pour le nombre de TICKS!")
         elif limitChaud <= limitFroid :
-            raise Exception (" Temperateur chaude en dessous de celle du froid")
-
+            raise Exception (" Temperateur chaude en dessous de celle du froid !")
+    # initialisation de variables recu en paramettre
         self._hub_connection = None
         self.NBTICK = nbTick
         self.LIMITCHAUD = limitChaud
@@ -81,6 +81,7 @@ class Main:
 
 if __name__ == '__main__':
     
+    # valeur variables par defaut
     limitFroid = 20.0
     limitChaud = 80.0
     nbTick = 7
@@ -96,15 +97,18 @@ if __name__ == '__main__':
     while testtype not in [0, 1]:
          testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
     
+    # test automatique avec les valeurs 20 et 80, pour les temperatures
     if(testtype==0):
         if "LIMITCHAUD" in os.environ:
             limitChaud = float(os.environ["LIMITCHAUD"])
         if "LIMITFROID" in os.environ:
             limitFroid = float(os.environ["LIMITFROID"])
+    # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
     elif(testtype==1):
         limitChaud= int(input("Entrer limite chaleur max de control : "))
         limitFroid= int(input("Entrer limite froid min de control : "))
     
+    # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 
