@@ -10,12 +10,12 @@ import mysql.connector as mysql
 class Main:
     def __init__(self, mytoken, nbTick, limitFroid, limitChaud):
 
-
+    # test des valeurs recu en paramettre
         if nbTick <=0:
-            raise Exception (" Temperature en dessous de Zero")
+            raise Exception (" Valeur invalide pour le nombre de TICKS!")
         elif limitChaud <= limitFroid :
-            raise Exception (" Temperateur au desus de la chaleur max")
-
+            raise Exception (" Temperateur chaude en dessous de celle du froid !")
+    # initialisation de variables recu en paramettre
         self._hub_connection = None
         self.NBTICK = nbTick
         self.LIMITCHAUD = limitChaud
@@ -32,6 +32,7 @@ class Main:
     def start(self):
         self.setup()
         self._hub_connection.start() 
+
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
@@ -67,11 +68,10 @@ class Main:
             print(err)
     
     def analyzeDatapoint(self, date, data):
-        if (data <= self.LIMITFROID):                
-            self.sendActionToHvac(date, "TurnOnHeater", self.NBTICK)
-        elif (data >= self.LIMITCHAUD):                
+        if (data >= self.LIMITCHAUD):                
             self.sendActionToHvac(date, "TurnOnAc", self.NBTICK)
-        
+        elif (data <= self.LIMITFROID):                
+            self.sendActionToHvac(date, "TurnOnHeater", self.NBTICK)
 
     def sendActionToHvac(self, date, action, nbTick):
         
@@ -80,9 +80,36 @@ class Main:
         print(details)
 
 if __name__ == '__main__':
-        
+    
+    # valeur variables par defaut
+    limitFroid = 20.0
+    limitChaud = 80.0
+    nbTick = 7
+    token ="f0c51c904ed6dd637b2f"
+    # si variable d'environnement existe, on le prend, sinon, valeur par defaut
 
-    main = Main(os.environ["TOKEN"], int(os.environ["NBTICK"]), float(os.environ["LIMITFROID"]), float(os.environ["LIMITCHAUD"]))
+    if "NBTICK" in os.environ:
+        nbTick = int(os.environ["NBTICK"])
+    
+    if "TOKEN" in os.environ:
+        token = os.environ["TOKEN"]
+    testtype = 2
+    while testtype not in [0, 1]:
+         testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
+    
+    # test automatique avec les valeurs 20 et 80, pour les temperatures
+    if(testtype==0):
+        if "LIMITCHAUD" in os.environ:
+            limitChaud = float(os.environ["LIMITCHAUD"])
+        if "LIMITFROID" in os.environ:
+            limitFroid = float(os.environ["LIMITFROID"])
+    # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
+    elif(testtype==1):
+        limitChaud= int(input("Entrer limite chaleur max de control : "))
+        limitFroid= int(input("Entrer limite froid min de control : "))
+    
+    # exécution de l'application
+    main = Main(token, nbTick, limitFroid, limitChaud)
     main.start()
 
 
