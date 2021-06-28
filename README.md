@@ -15,6 +15,15 @@ Select the python interpreter of this virtual environment
 
 ## To run project
 In terminal: ```python main.py```
+The system will ask you if you want a dynamique or autoset test.
+    - Choose 0, for autoset
+    - Choose 1, to enter your own values for heat and cold.
+
+## Pass arguments to container 
+
+Up to 4 arguments can be specified: _token, nbTick, coldLimit, hotLimit_ (Note: please respect upper case characters)
+
+ ```docker run -e nbTick=1 -e token=1234 -e coldLimit=10 -e hotLimit=30 image_name```
 
 ## Unit Test
 
