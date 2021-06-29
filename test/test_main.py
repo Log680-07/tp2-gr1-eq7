@@ -23,7 +23,7 @@ class TestStringMethods(unittest.TestCase):
         with self.assertRaises(Exception):
             Main("f0c51c904ed6dd637b2f", 5, 0, 0)
     
-    # nous testons le nombre de tick invalide, il ne doit pas être inferieur à 0
+    # nous testons le nombre de tick invalide, il ne doit pas être inferieur à 0.
     def test_nbtick_Invalide(self):
         with self.assertRaises(Exception):
             Main("f0c51c904ed6dd637b2f", -4, 22, 56)
