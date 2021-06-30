@@ -15,6 +15,10 @@ Select the python interpreter of this virtual environment
 
 ## To run project
 In terminal: ```python main.py```
+The system will ask you if you want a dynamique or autoset test.
+
+- Choose 0, for autoset (heat=80 and cold=20)
+- Choose 1, to enter your own values for heat and cold.
 
 ## Unit Test
 
