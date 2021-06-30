@@ -107,6 +107,7 @@ if __name__ == '__main__':
     elif(testtype==1):
         limitChaud= int(input("Entrer limite chaleur max de control : "))
         limitFroid= int(input("Entrer limite froid min de control : "))
+    # test main sans image
     
     # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud)
