@@ -138,8 +138,8 @@ class Main:
 if __name__ == '__main__':
     
     # valeur variables par defaut
-    limitFroid = 40.0
-    limitChaud = 50.0
+    limitFroid = 20.0
+    limitChaud = 80.0
     nbTick = 7
     token ="f0c51c904ed6dd637b2f"
     # si variable d'environnement existe, on le prend, sinon, valeur par defaut
@@ -149,20 +149,11 @@ if __name__ == '__main__':
     
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
-    # testtype = 2
-    # while testtype not in [0, 1]:
-    #      testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
     
-    # test automatique avec les valeurs 20 et 80, pour les temperatures
-    # if(testtype==0):
-    #if "LIMITCHAUD" in os.environ:
-        #limitChaud = float(os.environ["LIMITCHAUD"])
-    #if "LIMITFROID" in os.environ:
-           # limitFroid = float(os.environ["LIMITFROID"])
-    # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
-    # elif(testtype==1):
-    #     limitChaud= int(input("Entrer limite chaleur max de control : "))
-    #     limitFroid= int(input("Entrer limite froid min de control : "))
+    if "LIMITCHAUD" in os.environ:
+        limitChaud = float(os.environ["LIMITCHAUD"])
+    if "LIMITFROID" in os.environ:
+           limitFroid = float(os.environ["LIMITFROID"])
     # # test main sans image
     
     # exécution de l'application
