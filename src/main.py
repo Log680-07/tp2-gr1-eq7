@@ -94,12 +94,6 @@ if __name__ == '__main__':
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
     
-<<<<<<< HEAD
-    if "LIMITCHAUD" in os.environ:
-        limitChaud = float(os.environ["LIMITCHAUD"])
-    if "LIMITFROID" in os.environ:
-           limitFroid = float(os.environ["LIMITFROID"])
-=======
     # test automatique avec les valeurs 20 et 80, pour les temperatures
     # if(testtype==0):
     if "LIMITCHAUD" in os.environ:
@@ -110,7 +104,6 @@ if __name__ == '__main__':
     # elif(testtype==1):
     #     limitChaud= int(input("Entrer limite chaleur max de control : "))
     #     limitFroid= int(input("Entrer limite froid min de control : "))
->>>>>>> parent of 1582392 (Ajout code pour Mysql)
     # # test main sans image
     
     # exécution de l'application
