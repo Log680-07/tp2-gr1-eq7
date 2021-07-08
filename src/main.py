@@ -22,6 +22,17 @@ class Main:
         self.LIMITFROID = limitFroid
         self.TOKEN = mytoken
     
+        self.mydb = mysql.connect(
+            user ='tp3',
+            password='Tp@3!55.',
+            host ='ec2-3-237-178-114.compute-1.amazonaws.com',
+            database ='tp3'
+        )
+        if self.mydb.cursor:
+            print("Connection etablie avec la DB")
+        else :
+            print("connection failed")
+        
     def __del__(self):
         if (self._hub_connection != None):
             self._hub_connection.stop()
