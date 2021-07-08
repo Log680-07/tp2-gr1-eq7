@@ -100,11 +100,6 @@ if __name__ == '__main__':
         limitChaud = float(os.environ["LIMITCHAUD"])
     if "LIMITFROID" in os.environ:
             limitFroid = float(os.environ["LIMITFROID"])
-    # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
-    # elif(testtype==1):
-    #     limitChaud= int(input("Entrer limite chaleur max de control : "))
-    #     limitFroid= int(input("Entrer limite froid min de control : "))
-    # # test main sans image
     
     # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud)
