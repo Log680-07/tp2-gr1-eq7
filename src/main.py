@@ -138,14 +138,6 @@ if __name__ == '__main__':
     
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
-<<<<<<< HEAD
-    # recupere temperature de l OS
-
-    if "LIMITCHAUD" in os.environ:
-        limitChaud = float(os.environ["LIMITCHAUD"])
-    if "LIMITFROID" in os.environ:
-        limitFroid = float(os.environ["LIMITFROID"])
-=======
     testtype = 2
     while testtype not in [0, 1]:
          testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
@@ -161,7 +153,6 @@ if __name__ == '__main__':
         limitChaud= int(input("Entrer limite chaleur max de control : "))
         limitFroid= int(input("Entrer limite froid min de control : "))
     # test main sans image
->>>>>>> parent of d060765 (code simplifie)
     
     # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud)
