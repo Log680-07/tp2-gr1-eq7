@@ -24,6 +24,7 @@ msgpack==1.0.1
 
 mysql.connector==2.2.9
 
+
 requests==2.25.1
 
 signalrcore==0.8.8

@@ -73,6 +73,8 @@ class Main:
             print(data[0]["date"]  + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
+            #- envois des données
+            self.sendDataToMysql(date,dp)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -88,6 +90,39 @@ class Main:
         r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
+        self.sendEventsToMysql(date, str(details))
+
+            
+    # send temperature data  to mysql
+    def sendDataToMysql(self,date, temp):
+       
+        query = "INSERT INTO log680_tp3(heure,temperature) " \
+            "VALUES(%s,%s)"
+        args = (date, temp)
+
+        try:
+            cursor = self.mydb.cursor()
+            cursor.execute(query, args)
+            self.mydb.commit()
+        except Error as error:
+            print(error)
+
+    # send events data  to mysql
+    def sendEventsToMysql(self,date, ev):
+       
+        query = "INSERT INTO log680_EVENS(heure,evenement) " \
+            "VALUES(%s,%s)"
+        args = (date, ev)
+
+        try:
+            cursor = self.mydb.cursor()
+            cursor.execute(query, args)
+            self.mydb.commit()
+        except Error as error:
+            print(error)
+
+ #-----------------------------------------------   
+
 
 if __name__ == '__main__':
     
@@ -103,21 +138,13 @@ if __name__ == '__main__':
     
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
-    testtype = 2
-    while testtype not in [0, 1]:
-         testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
-    
-    # test automatique avec les valeurs 20 et 80, pour les temperatures
-    # if(testtype==0):
+
+
     if "LIMITCHAUD" in os.environ:
         limitChaud = float(os.environ["LIMITCHAUD"])
     if "LIMITFROID" in os.environ:
             limitFroid = float(os.environ["LIMITFROID"])
-    # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
-    elif(testtype==1):
-        limitChaud= int(input("Entrer limite chaleur max de control : "))
-        limitFroid= int(input("Entrer limite froid min de control : "))
-    # test main sans image
+   
     
     # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud)
