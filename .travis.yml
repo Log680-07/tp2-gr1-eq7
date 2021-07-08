@@ -16,6 +16,8 @@ services:
 # installation de prerequis
 before_script:
   - pip install -r requirements.txt
+  - pip install --user mysql-connector-python
+
 
 script:
   - python -m unittest discover -v
