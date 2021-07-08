@@ -21,6 +21,7 @@ class Main:
         self.LIMITCHAUD = limitChaud
         self.LIMITFROID = limitFroid
         self.TOKEN = mytoken
+<<<<<<< HEAD
     # connection a la DB
         self.mydb = mysql.connect(
             user ='tp3',
@@ -32,6 +33,8 @@ class Main:
             print("Connection etablie avec la DB")
         else :
             print("connection failed")
+=======
+>>>>>>> parent of 1582392 (Ajout code pour Mysql)
     
     def __del__(self):
         if (self._hub_connection != None):
@@ -73,8 +76,12 @@ class Main:
             print(data[0]["date"]  + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
+<<<<<<< HEAD
             #- envois des données
             self.sendDataToMysql(date,dp)
+=======
+
+>>>>>>> parent of 1582392 (Ajout code pour Mysql)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -90,6 +97,7 @@ class Main:
         r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
+<<<<<<< HEAD
         # envois d evenements a la DB
         self.sendEventsToMysql(date, str(details))
 
@@ -123,13 +131,19 @@ class Main:
             print(error)
 
  #-----------------------------------------------   
+=======
+>>>>>>> parent of 1582392 (Ajout code pour Mysql)
 
 if __name__ == '__main__':
     
     # valeur variables par defaut
     limitFroid = 20.0
     limitChaud = 80.0
+<<<<<<< HEAD
     nbTick = 6
+=======
+    nbTick = 7
+>>>>>>> parent of 1582392 (Ajout code pour Mysql)
     token ="f0c51c904ed6dd637b2f"
     # si variable d'environnement existe, on le prend, sinon, valeur par defaut
 
@@ -143,10 +157,17 @@ if __name__ == '__main__':
          testtype = int(input ("Pour un test preconfiguré, entrer le '0', si non le '1' pour choisir limite froid et chaud : "))
     
     # test automatique avec les valeurs 20 et 80, pour les temperatures
+<<<<<<< HEAD
     if(testtype==0):
         if "LIMITCHAUD" in os.environ:
             limitChaud = float(os.environ["LIMITCHAUD"])
         if "LIMITFROID" in os.environ:
+=======
+    # if(testtype==0):
+    if "LIMITCHAUD" in os.environ:
+        limitChaud = float(os.environ["LIMITCHAUD"])
+    if "LIMITFROID" in os.environ:
+>>>>>>> parent of 1582392 (Ajout code pour Mysql)
             limitFroid = float(os.environ["LIMITFROID"])
     # test dynamique. Les valeurs de température dependent de ce que l'utilisateur va entrer
     elif(testtype==1):
