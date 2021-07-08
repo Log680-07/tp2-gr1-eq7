@@ -138,7 +138,7 @@ if __name__ == '__main__':
     
     if "TOKEN" in os.environ:
         token = os.environ["TOKEN"]
-
+    # recupere temperature de l OS
 
     if "LIMITCHAUD" in os.environ:
         limitChaud = float(os.environ["LIMITCHAUD"])
