@@ -1,3 +1,4 @@
+
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import sys
@@ -24,7 +25,8 @@ class Main:
     
         self.mydb = mysql.connect(
             user ='tp3',
-            password='Tp@3!55.',
+            password = os.environ["DB_PASS"],
+            #password='Tp@3!55.',
             host ='ec2-3-237-178-114.compute-1.amazonaws.com',
             database ='tp3'
         )
