@@ -1,0 +1,25 @@
+apiVersion: v1
+genre: Pod
+métadonnées:
+  nom: hvac-log680
+  espace de noms: tp3-gr1-eq7
+spec:
+  conteneurs:
+    - nom: hvac-controller
+      image: etslog680/image_hvac:latest
+      envDe:
+        - configMapRef:
+            nom: hvac-config
+        - secretRef:
+            nom: hvac-token
+      ressources:
+        demandes:
+          mémoire:  "15Mi» 
+          cpu:  "20m» 
+        limites:
+          mémoire:  "30Mi» 
+          cpu:  "40m» 
+      imagePullPolicy: IfNotPresent
+  restartPolicy: Always
+  imagePullSecrets:
+    - nom: dockerhub-credentials
