@@ -1,10 +1,10 @@
 apiVersion: v1
-genre: ConfigMap
-métadonnées:
-  nom: hvac-config
-  espace de noms: tp3-gr1-eq7
-données: 
+kind: ConfigMap
+metadata:
+  name: hvac-config
+  namespace: tp3-gr1-eq7
+data: 
   HVAC_HOST: https://log680.vincentboivin.ca
-  TEMP_LOW:  "20» 
-  TEMP_HIGH:  "60» 
-  NB_TICKS:  "10»  
+  TEMP_LOW: "20"
+  TEMP_HIGH: "60"
+  NB_TICKS: "10" 
