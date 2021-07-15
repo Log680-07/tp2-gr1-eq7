@@ -2,7 +2,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: hvac-config
-  namespace: tp3-gr1-eq7
 data: 
   HVAC_HOST: https://log680.vincentboivin.ca
   TEMP_LOW: "20"
