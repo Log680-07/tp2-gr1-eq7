@@ -22,10 +22,9 @@ class Main:
         self.LIMITCHAUD = limitChaud
         self.LIMITFROID = limitFroid
         self.TOKEN = mytoken
-    
+    # connection to the DB
         self.mydb = mysql.connect(
             user ='tp3',
-            #password = os.environ["DB_PASS"],
             password='Tp@3!55.',
             host ='ec2-3-237-178-114.compute-1.amazonaws.com',
             database ='tp3'
@@ -34,7 +33,7 @@ class Main:
             print("Connection etablie avec la DB")
         else :
             print("connection failed")
-        
+    #--------------    
     def __del__(self):
         if (self._hub_connection != None):
             self._hub_connection.stop()
@@ -75,8 +74,11 @@ class Main:
             print(data[0]["date"]  + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
-            #- envois des données
+            
+            #- envois des données( on envoi la temperateur dp et la date de l evenement)
             self.sendDataToMysql(date,dp)
+
+            # analyse de la temperature par le systeme.
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -92,6 +94,8 @@ class Main:
         r = requests.get(f"https://log680.vincentboivin.ca/api/hvac/{self.TOKEN}/{action}/{nbTick}") 
         details = json.loads(r.text)
         print(details)
+
+        # envoi des evenements vers la table log680_EVENS
         self.sendEventsToMysql(date, str(details))
 
             

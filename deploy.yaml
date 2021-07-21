@@ -1,0 +1,27 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: hvac-deployment 
+spec: 
+  selector:
+    matchLabels:
+        app: hvac-deployment
+  replicas: 3
+  template:
+    metadata:
+       labels:
+         app: hvac-deployment
+    spec:
+      containers:
+      - name: hvac-deployment
+        image: etslog680/image_hvac:latest
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "35m"
+          limits:
+            memory: "64Mi"
+            cpu: "80m"
+
+
+  
