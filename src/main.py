@@ -1,5 +1,6 @@
 
 from signalrcore.hub_connection_builder import HubConnectionBuilder
+from dotenv import load_dotenv
 import logging
 import sys
 import requests
@@ -8,11 +9,12 @@ import time
 import os
 import mysql.connector as mysql
 
+
 class Main:
-    def __init__(self, mytoken, nbTick, limitFroid, limitChaud):
+    def __init__(self, mytoken, nbTick, limitFroid, limitChaud, user, password, host, database):
 
     # test des valeurs recu en paramettre
-        if nbTick <=0:
+        if nbTick <= 0:
             raise Exception (" Valeur invalide pour le nombre de TICKS!")
         elif limitChaud <= limitFroid :
             raise Exception (" Temperateur chaude en dessous de celle du froid !")
@@ -22,12 +24,16 @@ class Main:
         self.LIMITCHAUD = limitChaud
         self.LIMITFROID = limitFroid
         self.TOKEN = mytoken
+        self.USER = user
+        self.PASSWORD = password
+        self.HOST = host
+        self.DATABASE = database
     # connection to the DB
         self.mydb = mysql.connect(
-            user ='tp3',
-            password='Tp@3!55.',
-            host ='ec2-3-237-178-114.compute-1.amazonaws.com',
-            database ='tp3'
+            user = user,
+            password = password,
+            host = host,
+            database = database
         )
         if self.mydb.cursor:
             print("Connection etablie avec la DB")
@@ -102,59 +108,53 @@ class Main:
     # send temperature data  to mysql
     def sendDataToMysql(self,date, temp):
        
-        query = "INSERT INTO log680_tp3(heure,temperature) " \
-            "VALUES(%s,%s)"
-        args = (date, temp)
-
-        try:
-            cursor = self.mydb.cursor()
-            cursor.execute(query, args)
-            self.mydb.commit()
-        except Error as error:
-            print(error)
+        self._extracted_from_sendEventsToMysql_3(
+            "INSERT INTO log680_tp3(heure,temperature) VALUES(%s,%s)",
+            date,
+            temp,
+        )
 
     # send events data  to mysql
     def sendEventsToMysql(self,date, ev):
        
-        query = "INSERT INTO log680_EVENS(heure,evenement) " \
-            "VALUES(%s,%s)"
-        args = (date, ev)
+        self._extracted_from_sendEventsToMysql_3(
+            "INSERT INTO log680_EVENS(heure,evenement) VALUES(%s,%s)", date, ev
+        )
 
+    def _extracted_from_sendEventsToMysql_3(self, arg0, date, arg2):
+        query = arg0
+        args = date, arg2
         try:
-            cursor = self.mydb.cursor()
-            cursor.execute(query, args)
-            self.mydb.commit()
+            self._extracted_from_sendEventsToMysql_8(query, args)
         except Error as error:
             print(error)
+
+    def _extracted_from_sendEventsToMysql_8(self, query, args):
+        cursor = self.mydb.cursor()
+        cursor.execute(query, args)
+        self.mydb.commit()
 
  #-----------------------------------------------   
 
 
 if __name__ == '__main__':
-    
-    # valeur variables par defaut
-    limitFroid = 20.0
-    limitChaud = 80.0
-    nbTick = 7
-    token ="f0c51c904ed6dd637b2f"
-    # si variable d'environnement existe, on le prend, sinon, valeur par defaut
+    # print(load_dotenv())
 
-    if "NBTICK" in os.environ:
-        nbTick = int(os.environ["NBTICK"])
-    
-    if "TOKEN" in os.environ:
-        token = os.environ["TOKEN"]
+    if load_dotenv() is True:
+        # print("ici")
+        user = os.getenv("USER")
+        password = os.getenv("PASSWORD")
+        host = os.getenv("HOST")
+        database = os.getenv("DATABASE")
+        nbTick = int(os.getenv("NBTICK"))
+        token = os.getenv("TOKEN")
+        limitChaud = int(os.getenv("LIMITCHAUD"))
+        limitFroid = int(os.getenv("LIMITFROID"))
+    else: # valeur variables par defaut
+        limitFroid = 20.0
+        limitChaud = 80.0
+        nbTick = 7
 
-
-    if "LIMITCHAUD" in os.environ:
-        limitChaud = float(os.environ["LIMITCHAUD"])
-    if "LIMITFROID" in os.environ:
-            limitFroid = float(os.environ["LIMITFROID"])
-   
-    
     # exécution de l'application
-    main = Main(token, nbTick, limitFroid, limitChaud)
+    main = Main(token, nbTick, limitFroid, limitChaud, user, password, host, database)
     main.start()
-
-
-
