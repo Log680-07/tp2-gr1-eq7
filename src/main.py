@@ -148,8 +148,8 @@ if __name__ == '__main__':
         database = os.getenv("DATABASE")
         nbTick = int(os.getenv("NBTICK"))
         token = os.getenv("TOKEN")
-        limitChaud = float(os.getenv("LIMITCHAUD"))
-        limitFroid = float(os.getenv("LIMITFROID"))
+        limitChaud = int(os.getenv("LIMITCHAUD"))
+        limitFroid = int(os.getenv("LIMITFROID"))
     else: # valeur variables par defaut
         limitFroid = 20.0
         limitChaud = 80.0
