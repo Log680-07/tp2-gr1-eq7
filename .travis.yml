@@ -17,7 +17,11 @@ services:
 before_script:
   - pip install -r requirements.txt
   - pip install mysql-connector-python-rf
-
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+  - chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t <dockerUser>/pypytest:$TRAVIS_BUILD_NUMBER .
+  - docker push <dockerUser>/pypytest
 
 
 script:
@@ -28,5 +32,6 @@ after success:
   - docker build -t etslog680/image_hvac .
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   - docker push etslog680/image_hvac:latest
+  - kubectl apply -f .\hvac-deployment.yaml
 
 #fin du code
