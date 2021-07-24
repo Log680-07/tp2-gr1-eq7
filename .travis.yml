@@ -23,7 +23,7 @@ before_script:
 
 script:
   - python -m unittest discover -v
-  - cat $KUBECONFIG
+  - echo $KUBECONFIG
   # - cat $KUBECONFIG > kubeconfig
   - cat kubeconfig
   # - echo "$PWR_DOCKER" | docker login -u "$USER_DOCKER" --password-stdin
