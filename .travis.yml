@@ -42,6 +42,7 @@ after_success:
   - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s/kubeconfig
   - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/kubeconfig get pods
   - cat manifests-k8s/kubeconfig
+  
   # - kubectl apply -f .\hvac-deployment.yaml
 
 #fin du code
