@@ -18,7 +18,7 @@ before_script:
   - pip install -r requirements.txt
   - pip install mysql-connector-python-rf
   - docker pull bitnami/kubectl
-  # - docker login -u $USER_DOCKER  -p $PWR_DOCKER
+  - docker login -u $USER_DOCKER  -p $PWR_DOCKER
 
 
 script:
@@ -26,8 +26,8 @@ script:
   
 # creation d'image et sa savegarde dans le docker
 after_success:
-  # - docker build -t etslog680/image_hvac:latest .
-  # - docker push etslog680/image_hvac:latest
+  - docker build -t etslog680/image_hvac:latest .
+  - docker push etslog680/image_hvac:latest
   - sed -i -e 's|KUBE_CA|'"${KUBE_CA}"'|g' manifests-k8s/config
   - sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' manifests-k8s/config
   - sed -i -e 's|KUBE_CLUSTER_NAME|'"${KUBE_CLUSTER_NAME}"'|g' manifests-k8s/config
