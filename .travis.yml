@@ -35,9 +35,9 @@ after_success:
   # - docker push etslog680/image_hvac:latest
   - sed -i -e 's|KUBE_CA|'"${KUBE_CA}"'|g' manifests-k8s/kubeconfig
   - sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' manifests-k8s/kubeconfig
-  - sed -i -e 's|KUBE_CLUSTER_NAME|'"${KUBE_CLUSTER_NAME}"'|g' manifests-k8s/manifests-k8s\kubeconfig
-  - sed -i -e 's|KUBE_USER_NAMESPACE|'"${KUBE_USER_NAMESPACE}"'|g' manifests-k8s/manifests-k8s\kubeconfig
-  - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s/manifests-k8s\kubeconfig
+  - sed -i -e 's|KUBE_CLUSTER_NAME|'"${KUBE_CLUSTER_NAME}"'|g' manifests-k8s/kubeconfig
+  - sed -i -e 's|KUBE_USER_NAMESPACE|'"${KUBE_USER_NAMESPACE}"'|g' manifests-k8s/kubeconfig
+  - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s/kubeconfig
   - sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' manifests-k8s/kubeconfig
   - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s/kubeconfig
   # - echo $TRAVIS_BUILD_DIR
