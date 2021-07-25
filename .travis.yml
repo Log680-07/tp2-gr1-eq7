@@ -17,7 +17,7 @@ services:
 before_script:
   - pip install -r requirements.txt
   - pip install mysql-connector-python-rf
-  - docker pull mkameni/k8s-kubectl
+  - docker pull bitnami/kubectl
   - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   # - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
   # - chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
