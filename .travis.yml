@@ -15,16 +15,16 @@ services:
 
 # installation de prerequis
 before_script:
-  # - pip install -r requirements.txt
-  # - pip install mysql-connector-python-rf
+  - pip install -r requirements.txt
+  - pip install mysql-connector-python-rf
   - docker pull bitnami/kubectl
   # - docker login -u $USER_DOCKER  -p $PWR_DOCKER
   # - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
   # - chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
 
 
-# script:
-  # - python -m unittest discover -v
+script:
+  - python -m unittest discover -v
   # - echo "$PWR_DOCKER" | docker login -u "$USER_DOCKER" --password-stdin
   # - docker build -t <dockerUser>/pypytest:$TRAVIS_BUILD_NUMBER .
   # - docker push <dockerUser>/pypytest
@@ -40,9 +40,10 @@ after_success:
   - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s/kubeconfig
   - sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' manifests-k8s/kubeconfig
   - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s/kubeconfig
-  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/kubeconfig get pods
   - cat manifests-k8s/kubeconfig
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/kubeconfig get pods
   
+
   # - kubectl apply -f .\hvac-deployment.yaml
 
 #fin du code
