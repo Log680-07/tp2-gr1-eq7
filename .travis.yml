@@ -25,14 +25,13 @@ before_script:
 
 script:
   - python -m unittest discover -v
-  - echo $TRAVIS_BUILD_DIR
   # - echo "$PWR_DOCKER" | docker login -u "$USER_DOCKER" --password-stdin
   # - docker build -t <dockerUser>/pypytest:$TRAVIS_BUILD_NUMBER .
   # - docker push <dockerUser>/pypytest
   
 # creation d'image et sa savegarde dans le docker
 after_success:
-  - docker build -t etslog680/image_hvac:latest .
+  # - docker build -t etslog680/image_hvac:latest .
   # - docker push etslog680/image_hvac:latest
   - sed -i -e 's|KUBE_CA|'"${KUBE_CA}"'|g' manifests-k8s\kubeconfig
   - sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' manifests-k8s\kubeconfig
@@ -41,7 +40,7 @@ after_success:
   - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s\manifests-k8s\kubeconfig
   - sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' manifests-k8s\kubeconfig
   - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s\kubeconfig
-  
+  - echo $TRAVIS_BUILD_DIR
   # - docker run -v ${TRAVIS_BUILD_DIR}:/kube smesch/kubectl kubectl --kubeconfig /kube/kubeconfig set image deployment/${K8S_DEPLOYMENT_NAME} ${K8S_DEPLOYMENT_NAME}=${DOCKER_USERNAME}/${DOCKER_IMAGE_NAME}:$TRAVIS_BUILD_ID
   # - kubectl apply -f .\hvac-deployment.yaml
 
