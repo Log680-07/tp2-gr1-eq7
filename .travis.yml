@@ -19,15 +19,10 @@ before_script:
   - pip install mysql-connector-python-rf
   - docker pull bitnami/kubectl
   # - docker login -u $USER_DOCKER  -p $PWR_DOCKER
-  # - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-  # - chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
 
 
 script:
   - python -m unittest discover -v
-  # - echo "$PWR_DOCKER" | docker login -u "$USER_DOCKER" --password-stdin
-  # - docker build -t <dockerUser>/pypytest:$TRAVIS_BUILD_NUMBER .
-  # - docker push <dockerUser>/pypytest
   
 # creation d'image et sa savegarde dans le docker
 after_success:
@@ -40,9 +35,12 @@ after_success:
   - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s/config
   - sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' manifests-k8s/config
   - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s/config
-  - cat manifests-k8s/config
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-deployment.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-secret.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-configmap.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-secret.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-configmap.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-deployment.yaml
   - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config get pods
-  
-  # - kubectl apply -f .\hvac-deployment.yaml
 
 #fin du code
