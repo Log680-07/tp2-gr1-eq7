@@ -43,7 +43,6 @@ after_success:
   - cat manifests-k8s/kubeconfig
   - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/kubeconfig get pods
   
-
   # - kubectl apply -f .\hvac-deployment.yaml
 
 #fin du code
