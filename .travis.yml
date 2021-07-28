@@ -17,16 +17,30 @@ services:
 before_script:
   - pip install -r requirements.txt
   - pip install mysql-connector-python-rf
-
+  - docker pull bitnami/kubectl
+  - docker login -u $USER_DOCKER  -p $PWR_DOCKER
 
 
 script:
   - python -m unittest discover -v
   
 # creation d'image et sa savegarde dans le docker
-after success:
-  - docker build -t etslog680/image_hvac .
-  - docker login -u $USER_DOCKER  -p $PWR_DOCKER
+after_success:
+  - docker build -t etslog680/image_hvac:latest .
   - docker push etslog680/image_hvac:latest
+  - sed -i -e 's|KUBE_CA|'"${KUBE_CA}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_ENDPOINT|'"${KUBE_ENDPOINT}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_CLUSTER_NAME|'"${KUBE_CLUSTER_NAME}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_USER_NAMESPACE|'"${KUBE_USER_NAMESPACE}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_ADMIN_CERT|'"${KUBE_ADMIN_CERT}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_ADMIN_KEY|'"${KUBE_ADMIN_KEY}"'|g' manifests-k8s/config
+  - sed -i -e 's|KUBE_USERNAME|'"${KUBE_USERNAME}"'|g' manifests-k8s/config
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-deployment.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-secret.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config delete -f /kube/hvac-configmap.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-secret.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-configmap.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config apply -f /kube/hvac-deployment.yaml
+  - docker run -v ${TRAVIS_BUILD_DIR}/manifests-k8s:/kube bitnami/kubectl --kubeconfig /kube/config get pods
 
 #fin du code
