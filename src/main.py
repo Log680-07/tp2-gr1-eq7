@@ -154,7 +154,7 @@ if __name__ == '__main__':
         limitFroid = 20.0
         limitChaud = 80.0
         nbTick = 7
-
+    # test for correction from team 7.
     # exécution de l'application
     main = Main(token, nbTick, limitFroid, limitChaud, user, password, host, database)
     main.start()
